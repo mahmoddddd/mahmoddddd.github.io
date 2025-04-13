@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahmod Emad | Senior Backend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --gray: #64748b;
+        --background: #f1f5f9;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--background);
+        color: var(--dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Dark Mode */
+      .dark-mode {
+        --dark: #f8fafc;
+        --light: #1e293b;
+        --background: #0f172a;
+        --gray: #94a3b8;
+      }
+
+      /* Theme Toggle */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        padding: 6rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+        opacity: 0.1;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 3rem;
+        font-weight: 700;
+        position: relative;
+        animation: fadeInDown 1s ease-out;
+      }
+
+      header p {
+        font-size: 1.4rem;
+        margin-top: 1rem;
+        opacity: 0.9;
+        position: relative;
+        animation: fadeInUp 1s ease-out 0.3s both;
+      }
+
+      .tagline {
+        display: inline-block;
+        margin-top: 1.5rem;
+        padding: 0.5rem 1.5rem;
+        background-color: rgba(255, 255, 255, 0.15);
+        border-radius: 2rem;
+        font-size: 1rem;
+        animation: fadeIn 1s ease-out 0.6s both;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(13, 17, 23, 0.9);
+        backdrop-filter: blur(10px);
+        z-index: 90;
+        padding: 1rem 2rem;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Sections */
+      section {
+        padding: 5rem 0;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .section-title h2 {
+        font-size: 2.2rem;
+        color: var(--dark);
+        display: inline-block;
+      }
+
+      .section-title h2::after {
+        content: "";
+        display: block;
+        width: 70px;
+        height: 4px;
+        background: var(--primary);
+        margin: 0.8rem auto 0;
+        border-radius: 2px;
+      }
+
+      /* About Section */
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .profile-image {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+
+      .profile-image:hover img {
+        transform: scale(1.05);
+      }
+
+      .education-section {
+        margin-top: 2rem;
+      }
+
+      .education-item {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        margin-top: 1.5rem;
+      }
+
+      .edu-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .edu-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+      }
+
+      .edu-icon i {
+        color: white;
+        font-size: 1.5rem;
+      }
+
+      .edu-details h4 {
+        margin: 0;
+        color: var(--dark);
+      }
+
+      .edu-details p {
+        margin: 0.3rem 0 0;
+        color: var(--gray);
+      }
+
+      .edu-focus {
+        margin-top: 1rem;
+      }
+
+      .edu-focus p {
+        color: var(--gray);
+        margin-bottom: 0.5rem;
+      }
+
+      /* Skills Section */
+      .skills-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .skill-category {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .skill-category h3 {
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+      }
+
+      .skill-item {
+        margin-bottom: 1.2rem;
+      }
+
+      .skill-name {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .skill-bar {
+        height: 8px;
+        background-color: var(--background);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .skill-progress {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        border-radius: 4px;
+        transition: width 1.5s ease-out;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .project {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+      }
+
+      .project:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-image {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .project:hover .project-image img {
+        transform: scale(1.1);
+      }
+
+      .project-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--primary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .project-content {
+        padding: 1.8rem;
+      }
+
+      .project h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.4rem;
+        color: var(--dark);
+      }
+
+      .project p {
+        color: var(--gray);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tech-tag {
+        background-color: var(--background);
+        color: var(--dark);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1.2rem;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .project-link:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .project-link i {
+        margin-right: 0.5rem;
+      }
+
+      .project-link.outline {
+        background-color: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .project-link.outline:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* Experience Section */
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 100%;
+        background-color: var(--primary);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+      }
+
+      .timeline-item:nth-child(odd) {
+        padding-right: calc(50% + 2rem);
+        text-align: right;
+      }
+
+      .timeline-item:nth-child(even) {
+        padding-left: calc(50% + 2rem);
+        text-align: left;
+      }
+
+      .timeline-date {
+        display: inline-block;
+        background-color: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .timeline-content {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .timeline-content h3 {
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .timeline-content h4 {
+        margin-bottom: 1rem;
+        color: var(--gray);
+        font-weight: 500;
+      }
+
+      .timeline-content ul {
+        padding-left: 1.5rem;
+        color: var(--gray);
+      }
+
+      .timeline-content li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Contact Section */
+      .contact {
+        background: linear-gradient(135deg, var(--dark), #0f172a);
+        color: white;
+        text-align: center;
+        padding: 5rem 0;
+        clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+      }
+
+      .contact h2 {
+        color: white;
+      }
+
+      .contact h2::after {
+        background: white;
+      }
+
+      .contact-info {
+        max-width: 600px;
+        margin: 2rem auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .contact-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .contact-item i {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .contact-item a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-item a:hover {
+        color: var(--primary);
+      }
+
+      .contact-form {
+        max-width: 600px;
+        margin: 3rem auto 0;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .submit-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        background-color: var(--primary-dark);
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 3rem;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        background-color: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      .whatsapp-link {
+        background-color: #25d366;
+      }
+
+      .whatsapp-link:hover {
+        background-color: #128c7e;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background-color: #0f172a;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 99;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .about-content {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-image {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .timeline::before {
+          left: 30px;
+        }
+
+        .timeline-item:nth-child(odd),
+        .timeline-item:nth-child(even) {
+          padding-left: 80px;
+          padding-right: 0;
+          text-align: left;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 5rem 1rem;
+        }
+
+        header h1 {
+          font-size: 2.2rem;
+        }
+
+        header p {
+          font-size: 1.2rem;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .contact-info {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <a href="#" class="logo">ME</a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Header/Hero Section -->
+    <header>
+      <div class="container">
+        <h1>Mahmod Emad</h1>
+        <p>Senior Backend Developer | Node.js Specialist</p>
+        <div class="tagline">
+          Building scalable and efficient server-side solutions
+        </div>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>About Me</h2>
+        </div>
+        <div class="about-content">
+          <div>
+            <h3>Who I Am</h3>
+            <p>
+              I'm a passionate backend developer with 1+ years of experience
+              building robust and scalable web applications. My expertise lies
+              in Node.js, Express, and database architecture.
+            </p>
+            <p>
+              I specialize in creating efficient APIs, optimizing database
+              performance, and implementing secure authentication systems. My
+              goal is to build systems that are not only functional but also
+              maintainable and scalable.
+            </p>
+            <div class="tech-tags" style="margin-top: 1.5rem">
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">Express</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">REST APIs</span>
+              <span class="tech-tag">TypeScript</span>
+            </div>
+
+            <!-- Education Section -->
+            <div class="education-section">
+              <h3 style="color: var(--primary); margin-bottom: 1rem">
+                Education
+              </h3>
+              <div class="education-item">
+                <div class="edu-header">
+                  <div class="edu-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                  </div>
+                  <div class="edu-details">
+                    <h4>Bachelor of Computer Science Engineering</h4>
+                    <p>University Name · Graduated 2023</p>
+                  </div>
+                </div>
+                <div class="edu-focus">
+                  <p>Key Focus Areas:</p>
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+                    <span class="tech-tag">Software Architecture</span>
+                    <span class="tech-tag">Database Systems</span>
+                    <span class="tech-tag">Algorithms</span>
+                    <span class="tech-tag">Network Security</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="profile-image">
+            <img
+              src="C:\Users\alshr\Desktop\portfolio\me.jpg"
+              alt="Mahmod Emad"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-title">
+          <h2>Technical Skills</h2>
+        </div>
+        <div class="skills-container">
+          <div class="skill-category">
+            <h3>Backend Development</h3>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Node.js</span>
+                <span>95%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Express</span>
+                <span>90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>REST APIs</span>
+                <span>92%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3>Databases</h3>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>MongoDB</span>
+                <span>88%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 88%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>PostgreSQL</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Redis</span>
+                <span>80%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 80%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3>Other Technologies</h3>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>TypeScript</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Docker</span>
+                <span>75%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 75%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>AWS</span>
+                <span>70%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-title">
+          <h2>Featured Projects</h2>
+        </div>
+        <div class="projects-grid">
+          <div class="project">
+            <div class="project-image">
+              <img
+                src="C:\Users\alshr\Desktop\portfolio\payment.jpg"
+                alt="LMS & Job Portal"
+              />
+            </div>
+            <span class="project-badge">Featured</span>
+            <div class="project-content">
+              <h3>LMS & Job Portal</h3>
+              <p>
+                A complete learning management system integrated with job portal
+                functionality featuring course management, user progress
+                tracking, and job matching algorithms.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">JWT</span>
+                <span class="tech-tag">Stripe API</span>
+                <span class="tech-tag">Swagger Docs</span>
+                <span class="tech-tag">Cloudinary For Upload Courses</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/mahmoddddd/LMS-JobPortal"
+                  target="_blank"
+                  class="project-link"
+                >
+                  <i class="fab fa-github"></i> Code
+                </a>
+                <a href="#" class="project-link outline">
+                  <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div class="project-image">
+              <img
+                src="https://magesolution.com/wp-content/uploads/2022/07/ecommerce-website-design-examples-1024x768.jpg"
+                alt="E-commerce App"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Shopify E-commerce App</h3>
+              <p>
+                Full-featured e-commerce backend with product catalog, inventory
+                management, payment processing, and order fulfillment systems.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">express.js</span>
+                <span class="tech-tag">JWT</span>
+                <span class="tech-tag">Cloudinary</span>
+                <span class="tech-tag">MongoDB</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/mahmoddddd/shopfy-E-commerce-Complete-project"
+                  target="_blank"
+                  class="project-link"
+                >
+                  <i class="fab fa-github"></i> Code
+                </a>
+                <a href="#" class="project-link outline">
+                  <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div class="project-image">
+              <img
+                src="https://miro.medium.com/v2/resize:fit:1400/1*2eBdh0vLZjUyCDF6x1EqvQ.png"
+                alt="TypeScript REST API"
+              />
+            </div>
+            <div class="project-content">
+              <h3>TypeScript REST API</h3>
+              <p>
+                A clean RESTful API built with Node.js and TypeScript
+                demonstrating SOLID principles, dependency injection, and
+                modular architecture.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Jest</span>
+                <span class="tech-tag">Swagger</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/mahmoddddd/basic_Typescript_RestApi_App"
+                  target="_blank"
+                  class="project-link"
+                >
+                  <i class="fab fa-github"></i> Code
+                </a>
+                <a href="#" class="project-link outline">
+                  <i class="fas fa-external-link-alt"></i> API Docs
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <div class="container">
+        <div class="section-title">
+          <h2>Professional Experience</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2024 - 2025</div>
+            <div class="timeline-content">
+              <h3>Backend Developer</h3>
+              <h4>Digital Innovations LLC</h4>
+              <ul>
+                <li>Developed RESTful APIs for web and mobile applications</li>
+                <li>
+                  Integrated third-party payment and authentication services
+                </li>
+                <li>Reduced server costs by 30% through query optimization</li>
+                <li>Implemented user authentication and authorization</li>
+                <li>Optimized database performance</li>
+                <li>Implemented error handling and logging</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2022 - 2024</div>
+            <div class="timeline-content">
+              <h3>Junior Backend Developer</h3>
+              <h4>StartUp Ventures</h4>
+              <ul>
+                <li>Built and maintained Node.js backend services</li>
+                <li>
+                  Implemented automated testing increasing code coverage to 85%
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>Get In Touch</h2>
+        </div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+2001002084496">+20 01002084496</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:mahmodd.elsheriff@gmail.com"
+              >mahmodd.elsheriff@gmail.com</a
+            >
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Cairo, Egypt</span>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <form id="contactForm">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Your Email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Subject" />
+            </div>
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                placeholder="Your Message"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+
+        <div class="social-links">
+          <a
+            href="https://www.linkedin.com/in/mahmod-emad-5084b0216"
+            target="_blank"
+            class="social-link"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a
+            href="https://github.com/mahmoddddd"
+            target="_blank"
+            class="social-link"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://wa.me/qr/5JOXTIP5RHCKJ1"
+            target="_blank"
+            class="social-link whatsapp-link"
+          >
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Mahmod Emad. All rights reserved.</p>
+        <p style="margin-top: 0.5rem">Designed with ❤️ by Mahmod Emad</p>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      // Dark Mode Toggle
+      const themeToggle = document.getElementById("themeToggle");
+      const body = document.body;
+
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+
+        if (body.classList.contains("dark-mode")) {
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+      });
+
+      // Scroll Reveal Animation
+      const sections = document.querySelectorAll("section");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+
+      // Back to Top Button
+      const backToTop = document.getElementById("backToTop");
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add("visible");
+        } else {
+          backToTop.classList.remove("visible");
+        }
+      });
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Form Submission
+      const contactForm = document.getElementById("contactForm");
+
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Thank you for your message! I will get back to you soon.");
+        contactForm.reset();
+      });
+
+      // Visitor Counter (Simulated)
+      const visitorCount = Math.floor(Math.random() * 1000) + 500;
+      console.log(`Visitor count: ${visitorCount}`);
+    </script>
+  </body>
+</html>
